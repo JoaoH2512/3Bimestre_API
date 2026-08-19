@@ -25,6 +25,24 @@
             .catch(erro => console.error('Erro ao buscar produtos:',
                 erro));
     </script>
+    <br>
+    <h1>Lista de Pets</h1>
+    <ul id='lista-pets'></ul>
+    <script>
+        fetch('http://127.0.0.1:8000/pets')
+            .then(resposta => resposta.json())
+            .then(pets => {
+                const lista = document.getElementById('lista-pets');
+                pets.forEach(pet => {
+                    const item = document.createElement('li');
+                    item.textContent =
+                        `${pet.nome}   - Especie: ${pet.especie}- Raça: ${pet.raca} (idade: ${pet.idade}) `;
+                    lista.appendChild(item);
+                });
+            })
+            .catch(erro => console.error('Erro ao buscar pets:',
+                erro));
+    </script>
 </body>
 
 </html>
