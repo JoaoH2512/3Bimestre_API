@@ -10,6 +10,17 @@ class ProdutoCreate(ProdutoBase):
 
 class ProdutoResponse(ProdutoBase):
     id: int
+# PARTE DOS PETS EM!!!
+class PetBase(BaseModel):
+    nome: str
+    especie: str
+    idade: int
+
+class PetCreate(PetBase):
+    raca: str
+
+class PetResponse(PetBase):
+    id: int
 
 class Config:
     from_attributes = True

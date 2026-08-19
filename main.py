@@ -4,7 +4,8 @@ from database import Base, engine, get_db
 from models import ProdutoDB
 from schemas import ProdutoCreate, ProdutoResponse
 from fastapi import HTTPException
-
+from models import PetDB
+from schemas import PetCreate, PetResponse
 from fastapi.middleware.cors import CORSMiddleware
 
 Base.metadata.create_all(bind=engine) # cria as tabelas, se ainda não existirem
@@ -60,3 +61,48 @@ Session = Depends(get_db)):
     db.commit()
     db.refresh(produto)
     return produto
+
+# daqui é o PETs agora, da atividade prática 
+
+@app.get('/pets', response_model=list[PetResponse])
+def listar_pets(db: Session = Depends(get_db)):
+    return db.query(PetDB).all()
+
+# GET /pets/{id} -> retorna um único pet pelo id
+@app.get('/pets/{pet_id}', response_model=PetResponse)
+def obter_pet(pet_id: int, db: Session = Depends(get_db)):
+    pet = db.query(PetDB).filter(PetDB.id == pet_id).first()
+    if pet is None:
+        raise HTTPException(status_code=404, detail='Pet não encontrado')
+    return pet
+
+    # DELETE /pets/{id} -> remove um pet do banco de dados
+@app.delete('/pets/{pet_id}', status_code=204)
+def remover_pet(pet_id: int, db: Session = Depends(get_db)):
+    pet = db.query(PetDB).filter(PetDB.id == pet_id).first()
+    if pet is None:
+        raise HTTPException(status_code=404, detail='Pet não encontrado')
+    db.delete(pet)
+    db.commit()
+
+@app.post('/pets', response_model=PetResponse, status_code=201)
+def criar_pet(pet: PetCreate, db: Session = Depends(get_db)):
+    novo_pet = PetDB(**pet.dict())
+    db.add(novo_pet)
+    db.commit()
+    db.refresh(novo_pet)
+    return novo_pet
+
+    # PUT /pets/{id} -> atualiza um pet existente no banco
+@app.put('/pets/{pet_id}', response_model=PetResponse)
+def atualizar_pet(pet_id: int, dados: PetCreate, db: Session = Depends(get_db)):
+    pet = db.query(PetDB).filter(PetDB.id == pet_id).first()
+    if pet is None:
+        raise HTTPException(status_code=404, detail='Pet não encontrado')
+    pet.nome = dados.nome
+    pet.especie = dados.especie
+    pet.raca = dados.raca
+    pet.idade = dados.idade
+    db.commit()
+    db.refresh(pet)
+    return pet

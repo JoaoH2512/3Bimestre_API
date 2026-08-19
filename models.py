@@ -7,3 +7,11 @@ class ProdutoDB(Base):
     nome = Column(String(100), nullable=False)
     preco = Column(Float, nullable=False)
     quantidade = Column(Integer, nullable=False)
+
+class PetDB(Base):
+    __tablename__ = 'pets'
+    id = Column(Integer, primary_key=True, index=True)
+    nome = Column(String(100), nullable=False)
+    especie = Column(String(100), nullable=False)
+    raca = Column(String(100), nullable=False)
+    idade = Column(Integer, nullable=False)

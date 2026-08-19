@@ -70,3 +70,49 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+-- agora é tabelas só dos Pets okk !!
+
+CREATE TABLE `pet` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(100) NOT NULL,
+  `especie` varchar(100) NOT NULL,
+  `raca` varchar(100) NOT NULL,
+  `idade` varchar(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `pet`
+--
+
+INSERT INTO `pet` (`id`, `nome`, `especie`, `raca`, `idade`) VALUES
+(1, 'Rex', 'Cão', 'Labrador', '3'),
+(2, 'Mia', 'Gato', 'Siames', '2'),
+(3, 'Dragão', 'Dragão', 'Fogo', '100');
+
+--
+-- Índices para tabelas despejadas
+--
+
+--
+-- Índices de tabela `pet`
+--
+ALTER TABLE `pet`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `ix_pets_id` (`id`);
+
+--
+-- AUTO_INCREMENT para tabelas despejadas
+--
+
+--
+-- AUTO_INCREMENT de tabela `pet`
+--
+ALTER TABLE `pet`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
