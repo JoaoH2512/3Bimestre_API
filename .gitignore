@@ -8,3 +8,9 @@ __pyache__/
 
 #Arquivos de Ambiente
 .env
+
+# .gitignore
+htmlcov/
+.coverage
+relatorio.html
+resultado.xml
